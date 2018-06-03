@@ -15,6 +15,7 @@ class StartViewController: UIViewController {
     @IBOutlet weak var categoryCollectionView: UICollectionView!
     
     private var viewModel: UsersViewModel?
+    private var selectedItem = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +61,8 @@ extension StartViewController: UICollectionViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         categoryCollectionView.isHidden = false
         userTableViewConstraint.constant = 2
+        selectedItem = indexPath.row
+        categoryCollectionView.reloadData()
     }
     
 }
@@ -73,7 +76,7 @@ extension StartViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = categoryCollectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellIds.collectionView, for: indexPath) as? CategoryCollectionViewCell
-        guard let mainaCategory = viewModel?.users[indexPath.row].mainCategory, let subCategory = viewModel?.users[indexPath.row].subCategory else {
+        guard let mainaCategory = viewModel?.users[selectedItem].mainCategory, let subCategory = viewModel?.users[selectedItem].subCategory else {
             return UICollectionViewCell()
         }
         if indexPath.row == 0 {
