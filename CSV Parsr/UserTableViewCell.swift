@@ -17,7 +17,7 @@ class UserTableViewCell: UITableViewCell {
     
     func setUpView(user: UserProfile) {
             self.userNameLabel.text = user.name
-            self.detailLabel.text = user.detail
+//            self.detailLabel.text = user.category[0]
     }
     
 }

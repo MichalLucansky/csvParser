@@ -20,8 +20,8 @@ class StartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        userTableView.isHidden = true
-        categoryCollectionView.isHidden = true
-        userTableViewConstraint.constant = -109
+//        categoryCollectionView.isHidden = true
+//        userTableViewConstraint.constant = -109
     }
     
     func initializeViewModel(users:[UserProfile]) {
@@ -31,11 +31,20 @@ class StartViewController: UIViewController {
     @IBAction func open(_ sender: UIButton) {
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationVC = segue.destination as? UserTableViewController {
+            destinationVC.configure(user: (sender as? UserProfile)!)
+        }
+    }
+    
 
 }
 
 extension StartViewController: UITableViewDelegate {
-    
+//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+//
+//        performSegue(withIdentifier: "id", sender: viewModel?.users[indexPath.row])
+//    }
 }
 
 extension StartViewController: UITableViewDataSource {
@@ -59,10 +68,11 @@ extension StartViewController: UITableViewDataSource {
 extension StartViewController: UICollectionViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        categoryCollectionView.isHidden = false
-        userTableViewConstraint.constant = 2
-        selectedItem = indexPath.row
-        categoryCollectionView.reloadData()
+//        categoryCollectionView.isHidden = false
+//        userTableViewConstraint.constant = 2
+//        selectedItem = indexPath.row
+//        categoryCollectionView.reloadData()
+        performSegue(withIdentifier: "id", sender: viewModel?.users[indexPath.row])
     }
     
 }
@@ -76,15 +86,15 @@ extension StartViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = categoryCollectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellIds.collectionView, for: indexPath) as? CategoryCollectionViewCell
-        guard let mainaCategory = viewModel?.users[selectedItem].mainCategory, let subCategory = viewModel?.users[selectedItem].subCategory else {
-            return UICollectionViewCell()
-        }
-        if indexPath.row == 0 {
-            cell?.setUpView(dataName:mainaCategory)
-        } else if indexPath.row == 1{
-            cell?.setUpView(dataName:subCategory)
-        }
-        
+//        guard let mainaCategory = viewModel?.users[selectedItem].mainCategory, let subCategory = viewModel?.users[selectedItem].subCategory else {
+//            return UICollectionViewCell()
+//        }
+//        if indexPath.row == 0 {
+//            cell?.setUpView(dataName:mainaCategory)
+//        } else if indexPath.row == 1{
+//            cell?.setUpView(dataName:subCategory)
+//        }
+//
         return cell ?? UICollectionViewCell()
     }
     

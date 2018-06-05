@@ -10,7 +10,16 @@ import UIKit
 import CSV
 
 
-class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocumentBrowserViewControllerDelegate {
+class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocumentBrowserViewControllerDelegate{
+    
+    var users = [UserProfile]()
+    var currentUserID = String()
+    var eName: String = String()
+    var name:String = String()
+    var category = UserCategory()
+    var item = UserItems()
+    var userCategory:[UserCategory] = [UserCategory]()
+    var userItems:[UserItems] = [UserItems]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,36 +34,17 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
     
     // MARK: UIDocumentBrowserViewControllerDelegate
     
-    private func parseCSV(documentPath: URL) ->[UserProfile] {
-        
-        do {
-            let content = try String(contentsOf: documentPath, encoding: String.Encoding.utf8)
-            let csvString = content
-            let csv = try CSVReader(string: csvString,
-                                     hasHeaderRow: true)
-            
-            if let headerRow = csv.headerRow {
-            print("\(headerRow)")
-            var users = [UserProfile]()
-            while csv.next() != nil {
-                guard let name = csv[Constants.CSVId.user], let mainCategory = csv[Constants.CSVId.mainCategory], let subCategory = csv[Constants.CSVId.subCategory], let detail = csv[Constants.CSVId.detail] else { return [UserProfile]()}
-                let user = UserProfile(name: name, mainCategory: mainCategory, subCategory: subCategory, detail: detail)
-                users.append(user)
-                
-
-                }
-                return users
+    private func parseDocument(documentPath: URL) {
+        if let parser = XMLParser(contentsOf: documentPath) {
+                parser.delegate = self
+                parser.parse()
             }
-           
-        } catch let err {
-            print(err)
-        }
-        return [UserProfile]()
     }
     
     func documentBrowser(_ controller: UIDocumentBrowserViewController, didPickDocumentURLs documentURLs: [URL]) {
         guard let sourceURL = documentURLs.first else { return }
-        let users = parseCSV(documentPath: sourceURL)
+        parseDocument(documentPath: sourceURL)
+        print(users.count)
         performSegue(withIdentifier:  Constants.SegueIds.showUsers, sender: users)
     }
     
@@ -69,3 +59,52 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
     }
 }
 
+extension DocumentBrowserViewController: XMLParserDelegate {
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
+        eName = elementName
+        if elementName == "user" {
+            name = String()
+            item.id = String()
+            category.items = []
+            userItems = []
+            userCategory = []
+            let userID = attributeDict["id"]
+            self.currentUserID = (userID)!
+        }
+        if elementName == "ownedCategory" {
+            category.items.removeAll()
+        }
+    }
+    
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        
+        if elementName == "user" {
+            let user = UserProfile(name: name, id: currentUserID, category: userCategory)
+            print(user.name)
+            print(user.category)
+            users.append(user)
+        }
+        
+        if elementName == "ownedCategory"{
+            userCategory.append(category)
+        }
+    }
+    
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
+        let data = string.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if (!data.isEmpty) {
+            if eName == "name" {
+                name += data
+            }
+             else if eName == "item" {
+                item.id = data
+                userItems.append(item)
+                category.items = userItems
+                
+             } else if eName == "ownedCategory" {
+                    category.id = data
+            }
+        }
+    }
+}

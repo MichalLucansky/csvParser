@@ -10,7 +10,7 @@ import Foundation
 
 class UsersViewModel {
     
-    var users = [UserProfile]()    
+    var users = [UserProfile]()
     init(users: [UserProfile]) {
         self.users = users
     }

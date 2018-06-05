@@ -24,14 +24,14 @@
 			<key>CFBundleTypeIconFiles</key>
 			<array/>
 			<key>CFBundleTypeName</key>
-			<string>CSV</string>
+			<string>XML</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>public.comma-separated-values-text</string>
+				<string>public.xml</string>
 			</array>
 		</dict>
 		<dict/>

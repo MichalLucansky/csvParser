@@ -10,16 +10,32 @@ import Foundation
 
 struct UserProfile {
     
-    var name:String?
-    var mainCategory:String?
-    var subCategory:String?
-    var detail:String?
+    var name:String = String()
+    var id:String = String()
+    var category:[UserCategory] = [UserCategory]()
     
-    init(name:String, mainCategory:String, subCategory:String, detail:String) {
+    init(name:String, id:String, category: [UserCategory]) {
         self.name = name
-        self.mainCategory = mainCategory
-        self.subCategory = subCategory
-        self.detail = detail
-        
+        self.id = id
+        self.category = category
     }
+}
+
+struct UserCategory {
+    
+    var id:String?
+    var items:[UserItems] = [UserItems]()
+    
+//    init(id:String) {
+//        self.id = id
+////        self.items = items
+//    }
+}
+
+struct UserItems {
+    var id:String = String()
+    
+//    init(id:String) {
+//        self.id = id
+//    }
 }

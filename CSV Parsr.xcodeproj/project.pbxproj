@@ -21,6 +21,10 @@
 		37ADED0720BAB273005FF57F /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADED0620BAB273005FF57F /* CategoryCollectionViewCell.swift */; };
 		37ADED0920BAE49B005FF57F /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADED0820BAE49B005FF57F /* UserProfile.swift */; };
 		37ADED0B20BAE6FA005FF57F /* UsersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADED0A20BAE6FA005FF57F /* UsersViewModel.swift */; };
+		37F040B620C7201B007DA2B4 /* UserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F040B520C7201B007DA2B4 /* UserTableViewController.swift */; };
+		37F040B820C72534007DA2B4 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F040B720C72534007DA2B4 /* ProfileTableViewCell.swift */; };
+		37F040BA20C7264E007DA2B4 /* CategoryDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F040B920C7264E007DA2B4 /* CategoryDetailController.swift */; };
+		37F040BC20C7268B007DA2B4 /* CategoryDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F040BB20C7268B007DA2B4 /* CategoryDetailCell.swift */; };
 		4080D6154B0A70776C29A55E /* Pods_CSV_Parsr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01BDF3A821B0DB96BD920CAE /* Pods_CSV_Parsr.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +47,10 @@
 		37ADED0620BAB273005FF57F /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		37ADED0820BAE49B005FF57F /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		37ADED0A20BAE6FA005FF57F /* UsersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewModel.swift; sourceTree = "<group>"; };
+		37F040B520C7201B007DA2B4 /* UserTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewController.swift; sourceTree = "<group>"; };
+		37F040B720C72534007DA2B4 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		37F040B920C7264E007DA2B4 /* CategoryDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailController.swift; sourceTree = "<group>"; };
+		37F040BB20C7268B007DA2B4 /* CategoryDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailCell.swift; sourceTree = "<group>"; };
 		8E83A4DC9F4C789E65D9DD7C /* Pods-CSV Parsr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CSV Parsr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CSV Parsr/Pods-CSV Parsr.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,6 +102,10 @@
 				37ADED0620BAB273005FF57F /* CategoryCollectionViewCell.swift */,
 				37ADED0820BAE49B005FF57F /* UserProfile.swift */,
 				37ADED0A20BAE6FA005FF57F /* UsersViewModel.swift */,
+				37F040B520C7201B007DA2B4 /* UserTableViewController.swift */,
+				37F040B720C72534007DA2B4 /* ProfileTableViewCell.swift */,
+				37F040B920C7264E007DA2B4 /* CategoryDetailController.swift */,
+				37F040BB20C7268B007DA2B4 /* CategoryDetailCell.swift */,
 			);
 			path = "CSV Parsr";
 			sourceTree = "<group>";
@@ -228,6 +240,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37F040BA20C7264E007DA2B4 /* CategoryDetailController.swift in Sources */,
+				37F040BC20C7268B007DA2B4 /* CategoryDetailCell.swift in Sources */,
 				37ADED0B20BAE6FA005FF57F /* UsersViewModel.swift in Sources */,
 				3701564F20B08B0100A541ED /* StartViewController.swift in Sources */,
 				3701563F20B0891600A541ED /* Document.swift in Sources */,
@@ -237,7 +251,9 @@
 				37ADED0720BAB273005FF57F /* CategoryCollectionViewCell.swift in Sources */,
 				37ADED0520BAB13F005FF57F /* UserTableViewCell.swift in Sources */,
 				3701563B20B0891600A541ED /* DocumentBrowserViewController.swift in Sources */,
+				37F040B820C72534007DA2B4 /* ProfileTableViewCell.swift in Sources */,
 				3701563920B0891600A541ED /* AppDelegate.swift in Sources */,
+				37F040B620C7201B007DA2B4 /* UserTableViewController.swift in Sources */,
 				37ADED0320BAAE92005FF57F /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
