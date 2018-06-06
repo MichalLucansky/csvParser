@@ -11,6 +11,8 @@ import CSV
 
 
 class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocumentBrowserViewControllerDelegate{
+    var currentProductDatabase = Product()
+    var dataBaseProduct = [Product]()
     var dataBaseCategory = [Category]()
     var curentDatabaseCategory = Category()
     var curreneDatabaseCategoryId = String()
@@ -46,8 +48,8 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
     func documentBrowser(_ controller: UIDocumentBrowserViewController, didPickDocumentURLs documentURLs: [URL]) {
         guard let sourceURL = documentURLs.first else { return }
         parseDocument(documentPath: sourceURL)
-        let xxx = (users, dataBaseCategory)
-        performSegue(withIdentifier:  Constants.SegueIds.showUsers, sender: xxx)
+        let data = (users, dataBaseCategory, dataBaseProduct)
+        performSegue(withIdentifier:  Constants.SegueIds.showUsers, sender: data)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -55,8 +57,8 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
         if segue.identifier == Constants.SegueIds.showUsers{
             let destViewController = segue.destination as? UINavigationController
             let targetController = destViewController?.topViewController as? StartViewController
-            guard let users = sender as? ([UserProfile],[Category]) else {return}
-            targetController?.initializeViewModel(users:users.0, categories: users.1)
+            guard let users = sender as? ([UserProfile],[Category],[Product]) else {return}
+            targetController?.initializeViewModel(users:users.0, categories: users.1, products: users.2)
         }
     }
 }
@@ -78,7 +80,15 @@ extension DocumentBrowserViewController: XMLParserDelegate {
         
         if elementName == "category" {
             let categoryId = attributeDict["id"]
-            self.curentDatabaseCategory.id = categoryId!
+            let parentId = attributeDict["parent"]
+            if categoryId != nil && parentId != nil {
+                self.curentDatabaseCategory.id = categoryId!
+            } else {
+                self.currentProductDatabase.id = categoryId!
+                 dataBaseProduct.append(currentProductDatabase)
+            }
+            
+            
         }
 
     }
@@ -88,8 +98,8 @@ extension DocumentBrowserViewController: XMLParserDelegate {
         if elementName == "user" {
             
             let user = UserProfile(name: name, id: currentUserID, category: userCategory)
-            print(user.name)
-            print(user.category)
+//            print(user.name)
+//            print(user.category)
             users.append(user)
         }
         
@@ -99,8 +109,11 @@ extension DocumentBrowserViewController: XMLParserDelegate {
         }
         
         if elementName == "category" {
-            print(curentDatabaseCategory.name, curentDatabaseCategory.id, curentDatabaseCategory)
+//            print(curentDatabaseCategory.name, curentDatabaseCategory.id, curentDatabaseCategory)
+//            print(currentProductDatabase.name, currentProductDatabase.id)
             dataBaseCategory.append(curentDatabaseCategory)
+//            dataBaseProduct.append(currentProductDatabase)
+            
         }
         
     }
@@ -113,6 +126,7 @@ extension DocumentBrowserViewController: XMLParserDelegate {
             if eName == "name" {
                 name += data
                 curentDatabaseCategory.name = data
+                currentProductDatabase.name = data
             }
              else if eName == "item" {
                
@@ -126,6 +140,10 @@ extension DocumentBrowserViewController: XMLParserDelegate {
             
             if eName == "active" {
                 curentDatabaseCategory.active = data
+            }
+            
+            if eName == "category" {
+               
             }
         }
     }

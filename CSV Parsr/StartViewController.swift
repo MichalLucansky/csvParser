@@ -19,13 +19,17 @@ class StartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        userTableView.isHidden = true
-//        categoryCollectionView.isHidden = true
-//        userTableViewConstraint.constant = -109
+        let uniqueRecords = viewModel?.products.reduce([], {
+            $0.contains($1) ? $0 : $0 + [$1]
+        })
+        print(uniqueRecords![0].id)
+        print(uniqueRecords![0].name)
+        print(uniqueRecords![1].id)
+        print(uniqueRecords![1].name)
     }
     
-    func initializeViewModel(users:[UserProfile],categories:[Category]) {
-        viewModel = UsersViewModel(users: users, categories: categories)
+    func initializeViewModel(users:[UserProfile],categories:[Category], products: [Product]) {
+        viewModel = UsersViewModel(users: users, categories: categories, products: products)
     }
     
     @IBAction func open(_ sender: UIButton) {
@@ -36,8 +40,6 @@ class StartViewController: UIViewController {
             destinationVC.configure(user: (sender as? UserProfile)!)
         }
     }
-    
-
 }
 
 extension StartViewController: UITableViewDelegate {

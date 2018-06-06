@@ -16,8 +16,13 @@ struct Category {
     
 }
 
-struct Product {
+struct Product: Equatable {
     var id:String?
     var name:String?
     var parentCategory:String?
+    
+    static func == (lhs: Product, rhs: Product) -> Bool {
+        return lhs.name == rhs.name &&
+            lhs.id == rhs.id
+    }
 }

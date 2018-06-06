@@ -12,8 +12,10 @@ class UsersViewModel {
     
     var users = [UserProfile]()
     var categories = [Category]()
-    init(users: [UserProfile], categories:[Category]) {
+    var products = [Product]()
+    init(users: [UserProfile], categories:[Category], products:[Product]) {
         self.users = users
         self.categories = categories
+        self.products = products
     }
 }

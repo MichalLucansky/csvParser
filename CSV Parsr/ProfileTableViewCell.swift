@@ -9,7 +9,7 @@
 import UIKit
 
 class ProfileTableViewCell: UITableViewCell {
-
+    let cat = Category()
     @IBOutlet weak var categoryName: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -17,6 +17,8 @@ class ProfileTableViewCell: UITableViewCell {
     }
 
     func configure(name:String){
+        
+        print(cat.id)
         categoryName.text = name
     }
     
