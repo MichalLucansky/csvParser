@@ -65,7 +65,7 @@ extension DocumentBrowserViewController: XMLParserDelegate {
         if elementName == "user" {
             name = String()
             item.id = String()
-            category.items = []
+//            category.items.removeAll()
             userItems = []
             userCategory = []
             let userID = attributeDict["id"]
@@ -73,6 +73,9 @@ extension DocumentBrowserViewController: XMLParserDelegate {
         }
         if elementName == "ownedCategory" {
             category.items.removeAll()
+        }
+        
+        if elementName == "item"{
         }
     }
     
@@ -87,6 +90,7 @@ extension DocumentBrowserViewController: XMLParserDelegate {
         
         if elementName == "ownedCategory"{
             userCategory.append(category)
+            userItems.removeAll()
         }
     }
     
@@ -98,6 +102,7 @@ extension DocumentBrowserViewController: XMLParserDelegate {
                 name += data
             }
              else if eName == "item" {
+               
                 item.id = data
                 userItems.append(item)
                 category.items = userItems
