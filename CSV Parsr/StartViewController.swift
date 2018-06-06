@@ -24,8 +24,8 @@ class StartViewController: UIViewController {
 //        userTableViewConstraint.constant = -109
     }
     
-    func initializeViewModel(users:[UserProfile]) {
-        viewModel = UsersViewModel(users: users)
+    func initializeViewModel(users:[UserProfile],categories:[Category]) {
+        viewModel = UsersViewModel(users: users, categories: categories)
     }
     
     @IBAction func open(_ sender: UIButton) {
@@ -80,21 +80,14 @@ extension StartViewController: UICollectionViewDelegate {
 extension StartViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return viewModel?.categories.count ?? 0
         
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = categoryCollectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellIds.collectionView, for: indexPath) as? CategoryCollectionViewCell
-//        guard let mainaCategory = viewModel?.users[selectedItem].mainCategory, let subCategory = viewModel?.users[selectedItem].subCategory else {
-//            return UICollectionViewCell()
-//        }
-//        if indexPath.row == 0 {
-//            cell?.setUpView(dataName:mainaCategory)
-//        } else if indexPath.row == 1{
-//            cell?.setUpView(dataName:subCategory)
-//        }
-//
+        guard let category = viewModel?.categories[indexPath.row].name else {return UICollectionViewCell()}
+        cell?.setUpView(dataName: category)
         return cell ?? UICollectionViewCell()
     }
     

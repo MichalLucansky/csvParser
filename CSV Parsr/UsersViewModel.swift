@@ -11,7 +11,9 @@ import Foundation
 class UsersViewModel {
     
     var users = [UserProfile]()
-    init(users: [UserProfile]) {
+    var categories = [Category]()
+    init(users: [UserProfile], categories:[Category]) {
         self.users = users
+        self.categories = categories
     }
 }

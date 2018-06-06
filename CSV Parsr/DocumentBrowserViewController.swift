@@ -11,7 +11,9 @@ import CSV
 
 
 class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocumentBrowserViewControllerDelegate{
-    
+    var dataBaseCategory = [Category]()
+    var curentDatabaseCategory = Category()
+    var curreneDatabaseCategoryId = String()
     var users = [UserProfile]()
     var currentUserID = String()
     var eName: String = String()
@@ -44,8 +46,8 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
     func documentBrowser(_ controller: UIDocumentBrowserViewController, didPickDocumentURLs documentURLs: [URL]) {
         guard let sourceURL = documentURLs.first else { return }
         parseDocument(documentPath: sourceURL)
-        print(users.count)
-        performSegue(withIdentifier:  Constants.SegueIds.showUsers, sender: users)
+        let xxx = (users, dataBaseCategory)
+        performSegue(withIdentifier:  Constants.SegueIds.showUsers, sender: xxx)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -53,8 +55,8 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
         if segue.identifier == Constants.SegueIds.showUsers{
             let destViewController = segue.destination as? UINavigationController
             let targetController = destViewController?.topViewController as? StartViewController
-            guard let users = sender as? [UserProfile] else {return}
-            targetController?.initializeViewModel(users:users)
+            guard let users = sender as? ([UserProfile],[Category]) else {return}
+            targetController?.initializeViewModel(users:users.0, categories: users.1)
         }
     }
 }
@@ -65,7 +67,6 @@ extension DocumentBrowserViewController: XMLParserDelegate {
         if elementName == "user" {
             name = String()
             item.id = String()
-//            category.items.removeAll()
             userItems = []
             userCategory = []
             let userID = attributeDict["id"]
@@ -75,13 +76,17 @@ extension DocumentBrowserViewController: XMLParserDelegate {
             category.items.removeAll()
         }
         
-        if elementName == "item"{
+        if elementName == "category" {
+            let categoryId = attributeDict["id"]
+            self.curentDatabaseCategory.id = categoryId!
         }
+
     }
     
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         
         if elementName == "user" {
+            
             let user = UserProfile(name: name, id: currentUserID, category: userCategory)
             print(user.name)
             print(user.category)
@@ -92,14 +97,22 @@ extension DocumentBrowserViewController: XMLParserDelegate {
             userCategory.append(category)
             userItems.removeAll()
         }
+        
+        if elementName == "category" {
+            print(curentDatabaseCategory.name, curentDatabaseCategory.id, curentDatabaseCategory)
+            dataBaseCategory.append(curentDatabaseCategory)
+        }
+        
     }
     
     func parser(_ parser: XMLParser, foundCharacters string: String) {
-        let data = string.trimmingCharacters(in: .whitespacesAndNewlines)
+        let data = string.folding(options: .diacriticInsensitive, locale: nil).trimmingCharacters(in: .whitespacesAndNewlines)
+//        data.trimmingCharacters(in: .whitespacesAndNewlines)
 
         if (!data.isEmpty) {
             if eName == "name" {
                 name += data
+                curentDatabaseCategory.name = data
             }
              else if eName == "item" {
                
@@ -109,6 +122,10 @@ extension DocumentBrowserViewController: XMLParserDelegate {
                 
              } else if eName == "ownedCategory" {
                     category.id = data
+            }
+            
+            if eName == "active" {
+                curentDatabaseCategory.active = data
             }
         }
     }
