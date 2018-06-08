@@ -15,6 +15,7 @@
 		3701564420B0891600A541ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3701564320B0891600A541ED /* Assets.xcassets */; };
 		3701564720B0891600A541ED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3701564520B0891600A541ED /* LaunchScreen.storyboard */; };
 		3701564F20B08B0100A541ED /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3701564E20B08B0100A541ED /* StartViewController.swift */; };
+		370F038F20C8348200CAD4CF /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370F038E20C8348200CAD4CF /* Database.swift */; };
 		37ADED0120BA9054005FF57F /* Costats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADED0020BA9054005FF57F /* Costats.swift */; };
 		37ADED0320BAAE92005FF57F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADED0220BAAE92005FF57F /* Extensions.swift */; };
 		37ADED0520BAB13F005FF57F /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADED0420BAB13F005FF57F /* UserTableViewCell.swift */; };
@@ -41,6 +42,7 @@
 		3701564620B0891600A541ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3701564820B0891600A541ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3701564E20B08B0100A541ED /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		370F038E20C8348200CAD4CF /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		37ADED0020BA9054005FF57F /* Costats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Costats.swift; sourceTree = "<group>"; };
 		37ADED0220BAAE92005FF57F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		37ADED0420BAB13F005FF57F /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				37F040B720C72534007DA2B4 /* ProfileTableViewCell.swift */,
 				37F040B920C7264E007DA2B4 /* CategoryDetailController.swift */,
 				37F040BB20C7268B007DA2B4 /* CategoryDetailCell.swift */,
+				370F038E20C8348200CAD4CF /* Database.swift */,
 			);
 			path = "CSV Parsr";
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				37F040B820C72534007DA2B4 /* ProfileTableViewCell.swift in Sources */,
 				3701563920B0891600A541ED /* AppDelegate.swift in Sources */,
 				37F040B620C7201B007DA2B4 /* UserTableViewController.swift in Sources */,
+				370F038F20C8348200CAD4CF /* Database.swift in Sources */,
 				37ADED0320BAAE92005FF57F /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

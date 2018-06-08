@@ -16,6 +16,7 @@ class UserTableViewCell: UITableViewCell {
     @IBOutlet weak var label: UIView!
     
     func setUpView(user: UserProfile) {
+
             self.userNameLabel.text = user.name
 //            self.detailLabel.text = user.category[0]
     }

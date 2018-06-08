@@ -19,13 +19,17 @@ class StartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        userTableView.isHidden = true
-//        categoryCollectionView.isHidden = true
-//        userTableViewConstraint.constant = -109
+        let uniqueRecords = viewModel?.products.reduce([], {
+            $0.contains($1) ? $0 : $0 + [$1]
+        })
+        print(uniqueRecords![0].id)
+        print(uniqueRecords![0].name)
+        print(uniqueRecords![1].id)
+        print(uniqueRecords![1].name)
     }
     
-    func initializeViewModel(users:[UserProfile]) {
-        viewModel = UsersViewModel(users: users)
+    func initializeViewModel(users:[UserProfile],categories:[Category], products: [Product]) {
+        viewModel = UsersViewModel(users: users, categories: categories, products: products)
     }
     
     @IBAction func open(_ sender: UIButton) {
@@ -36,8 +40,6 @@ class StartViewController: UIViewController {
             destinationVC.configure(user: (sender as? UserProfile)!)
         }
     }
-    
-
 }
 
 extension StartViewController: UITableViewDelegate {
@@ -80,21 +82,14 @@ extension StartViewController: UICollectionViewDelegate {
 extension StartViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return viewModel?.categories.count ?? 0
         
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = categoryCollectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellIds.collectionView, for: indexPath) as? CategoryCollectionViewCell
-//        guard let mainaCategory = viewModel?.users[selectedItem].mainCategory, let subCategory = viewModel?.users[selectedItem].subCategory else {
-//            return UICollectionViewCell()
-//        }
-//        if indexPath.row == 0 {
-//            cell?.setUpView(dataName:mainaCategory)
-//        } else if indexPath.row == 1{
-//            cell?.setUpView(dataName:subCategory)
-//        }
-//
+        guard let category = viewModel?.categories[indexPath.row].name else {return UICollectionViewCell()}
+        cell?.setUpView(dataName: category)
         return cell ?? UICollectionViewCell()
     }
     
