@@ -12,6 +12,7 @@ class UserTableViewController: UITableViewController {
     @IBOutlet weak var user: UILabel!
     
     var profile: UserProfile?
+    var catNames: [String]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,8 +20,9 @@ class UserTableViewController: UITableViewController {
         
     }
 
-    func configure(user: UserProfile) {
+    func configure(user: UserProfile, categoryNames: [String]?) {
         self.profile = user
+        self.catNames = categoryNames
     }
 
     // MARK: - Table view data source
@@ -43,14 +45,15 @@ class UserTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return profile?.category.count ?? 0
+        return catNames!.count
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath) as? ProfileTableViewCell
-        cell?.detailTextLabel?.text = profile?.category[indexPath.row].id
-        cell?.configure(name: (profile?.category[indexPath.row].id)!)
+//        cell?.detailTextLabel?.text = profile?.category[indexPath.row].id
+//        cell?.configure(name: (profile?.category[indexPath.row].id)!)
+        cell?.configure(name: catNames![indexPath.row])
         return cell ?? UITableViewCell()
     }
 
