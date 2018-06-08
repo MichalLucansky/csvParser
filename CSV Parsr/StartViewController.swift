@@ -19,13 +19,7 @@ class StartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let uniqueRecords = viewModel?.products.reduce([], {
-            $0.contains($1) ? $0 : $0 + [$1]
-        })
-        print(uniqueRecords![0].id)
-        print(uniqueRecords![0].name)
-        print(uniqueRecords![1].id)
-        print(uniqueRecords![1].name)
+//        print(viewModel?.returnNameForCategory(id:["439","235","13"]))
     }
     
     func initializeViewModel(users:[UserProfile],categories:[Category], products: [Product]) {
@@ -37,7 +31,8 @@ class StartViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationVC = segue.destination as? UserTableViewController {
-            destinationVC.configure(user: (sender as? UserProfile)!)
+            guard let user = sender as? (UserProfile?,[String]?) else {return}
+            destinationVC.configure(user: user.0!, categoryNames: user.1 )
         }
     }
 }
@@ -70,11 +65,10 @@ extension StartViewController: UITableViewDataSource {
 extension StartViewController: UICollectionViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        categoryCollectionView.isHidden = false
-//        userTableViewConstraint.constant = 2
-//        selectedItem = indexPath.row
-//        categoryCollectionView.reloadData()
-        performSegue(withIdentifier: "id", sender: viewModel?.users[indexPath.row])
+//        print(viewModel?.returnNameForCategory(id: (viewModel?.users[indexPath.row].category)!))
+        let categoryIds = viewModel?.users[indexPath.row].category.map{$0.id}
+        let sender = (viewModel?.users[indexPath.row],viewModel?.returnNameForCategory(id:categoryIds as! [String]))
+        performSegue(withIdentifier: "id", sender: sender)
     }
     
 }
@@ -88,7 +82,8 @@ extension StartViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = categoryCollectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellIds.collectionView, for: indexPath) as? CategoryCollectionViewCell
-        guard let category = viewModel?.categories[indexPath.row].name else {return UICollectionViewCell()}
+        guard let category = viewModel?.categories[indexPath.row].name else {return
+            UICollectionViewCell()}
         cell?.setUpView(dataName: category)
         return cell ?? UICollectionViewCell()
     }

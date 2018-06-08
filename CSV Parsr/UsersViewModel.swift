@@ -16,6 +16,14 @@ class UsersViewModel {
     init(users: [UserProfile], categories:[Category], products:[Product]) {
         self.users = users
         self.categories = categories
-        self.products = products
+        self.products = products.reduce([], {
+            $0.contains($1) ? $0 : $0 + [$1]
+        })
+    }
+    
+    func returnNameForCategory(id: [String]) -> [String]?{
+    
+        return categories.filter{(id.contains($0.id!))}.map{$0.name!}
+        
     }
 }

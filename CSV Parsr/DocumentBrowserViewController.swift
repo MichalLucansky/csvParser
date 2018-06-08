@@ -52,7 +52,7 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
     func documentBrowser(_ controller: UIDocumentBrowserViewController, didPickDocumentURLs documentURLs: [URL]) {
         guard let sourceURL = documentURLs.first else { return }
         parseDocument(documentPath: sourceURL)
-        let data = (users, dataBaseCategory, dataBaseProduct)
+        let data = (users, dataBaseCategory, dataBaseProduct)        
         performSegue(withIdentifier:  Constants.SegueIds.showUsers, sender: data)
     }
     
@@ -91,10 +91,7 @@ extension DocumentBrowserViewController: XMLParserDelegate {
                 self.currentProductDatabase.id = categoryId!
                  dataBaseProduct.append(currentProductDatabase)
             }
-            
-            
         }
-
     }
     
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
@@ -102,8 +99,6 @@ extension DocumentBrowserViewController: XMLParserDelegate {
         if elementName == "user" {
             
             let user = UserProfile(name: name, id: currentUserID, category: userCategory)
-//            print(user.name)
-//            print(user.category)
             users.append(user)
         }
         
@@ -114,7 +109,7 @@ extension DocumentBrowserViewController: XMLParserDelegate {
         
         if elementName == "category" {
 //            print(curentDatabaseCategory.name, curentDatabaseCategory.id, curentDatabaseCategory)
-            print(currentProductDatabase.name, currentProductDatabase.id)
+//            print(currentProductDatabase.name, currentProductDatabase.id)
             dataBaseCategory.append(curentDatabaseCategory)
 //            dataBaseProduct.append(currentProductDatabase)
             
@@ -123,18 +118,17 @@ extension DocumentBrowserViewController: XMLParserDelegate {
     }
     
     func parser(_ parser: XMLParser, foundCharacters string: String) {
-        let data = string.filter{!"\n\t".contains($0)}.folding(options: .diacriticInsensitive, locale: .current)
+        let data = string.trimmingCharacters(in: .whitespacesAndNewlines).filter{!"\n\t".contains($0)}.folding(options: .diacriticInsensitive, locale: .current)
 
 
         if (!data.isEmpty) {
             if eName == "name" {
-                name += data
+                name += data.filter{!" ".contains($0)}
                 curentDatabaseCategory.name = data
                 currentProductDatabase.name = data
             }
              else if eName == "item" {
-               
-                item.id = data
+                item.id = data.filter{!" ".contains($0)}
                 userItems.append(item)
                 category.items = userItems
                 

@@ -35,6 +35,7 @@ class CategoryDetailController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as? CategoryDetailCell
+
         cell?.configure(name:categoryItems![indexPath.row].id)
 
         // Configure the cell...
