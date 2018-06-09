@@ -10,13 +10,16 @@ import UIKit
 
 class CategoryDetailController: UITableViewController {
 
-    var categoryItems: [UserItems]?
+//    var categoryItems: [UserItems]?
+    var categoryItems: [String]?
     override func viewDidLoad() {
         super.viewDidLoad()
 
     }
 
-    func configure(items: [UserItems]) {
+//    func configure(items: [UserItems]) {
+    func configure(items: [String]){
+//        self.categoryItems = items
         self.categoryItems = items
     }
 
@@ -36,7 +39,7 @@ class CategoryDetailController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as? CategoryDetailCell
 
-        cell?.configure(name:categoryItems![indexPath.row].id)
+        cell?.configure(name:categoryItems![indexPath.row])
 
         // Configure the cell...
 

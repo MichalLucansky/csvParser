@@ -82,15 +82,23 @@ extension DocumentBrowserViewController: XMLParserDelegate {
             category.items.removeAll()
         }
         
+        if elementName == "product"{
+            name = String()
+            let id = attributeDict["id"]
+            self.currentProductDatabase.id = id!
+        }
+        
         if elementName == "category" {
+            
             let categoryId = attributeDict["id"]
             let parentId = attributeDict["parent"]
-            if categoryId != nil && parentId != nil {
+            if  parentId?.isEmpty == false {
                 self.curentDatabaseCategory.id = categoryId!
-            } else {
-                self.currentProductDatabase.id = categoryId!
-                 dataBaseProduct.append(currentProductDatabase)
             }
+        }
+        
+        if elementName == "name" {
+//            name = String()
         }
     }
     
@@ -108,11 +116,15 @@ extension DocumentBrowserViewController: XMLParserDelegate {
         }
         
         if elementName == "category" {
-//            print(curentDatabaseCategory.name, curentDatabaseCategory.id, curentDatabaseCategory)
-//            print(currentProductDatabase.name, currentProductDatabase.id)
             dataBaseCategory.append(curentDatabaseCategory)
-//            dataBaseProduct.append(currentProductDatabase)
-            
+        }
+        
+        if elementName == "product" {
+            self.currentProductDatabase.name = name
+            dataBaseProduct.append(currentProductDatabase)
+            name = String()
+            print(currentProductDatabase.name)
+            print(currentProductDatabase.id)
         }
         
     }
@@ -123,9 +135,9 @@ extension DocumentBrowserViewController: XMLParserDelegate {
 
         if (!data.isEmpty) {
             if eName == "name" {
-                name += data.filter{!" ".contains($0)}
+                print(data)
+                name += data
                 curentDatabaseCategory.name = data
-                currentProductDatabase.name = data
             }
              else if eName == "item" {
                 item.id = data.filter{!" ".contains($0)}
@@ -140,9 +152,9 @@ extension DocumentBrowserViewController: XMLParserDelegate {
                 curentDatabaseCategory.active = data
             }
             
-            if eName == "category" {
-               
-            }
+//            if eName == "alternate" {
+//                name = String()
+//            }
         }
     }
 }
