@@ -19,7 +19,6 @@ class StartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        print(viewModel?.returnNameForCategory(id:["439","235","13"]))
     }
     
     func initializeViewModel(users:[UserProfile],categories:[Category], products: [Product]) {
@@ -31,8 +30,8 @@ class StartViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationVC = segue.destination as? UserTableViewController {
-            guard let user = sender as? (UserProfile?,[String]?) else {return}
-            destinationVC.configure(user: user.0!, categoryNames: user.1 )
+            guard let user = sender as? (UserProfile?,[String]?,[[String]]) else {return}
+            destinationVC.configure(user: user.0!, categoryNames: user.1, itemNames: user.2)
         }
     }
 }
@@ -65,9 +64,18 @@ extension StartViewController: UITableViewDataSource {
 extension StartViewController: UICollectionViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print(viewModel?.returnNameForCategory(id: (viewModel?.users[indexPath.row].category)!))
         let categoryIds = viewModel?.users[indexPath.row].category.map{$0.id}
-        let sender = (viewModel?.users[indexPath.row],viewModel?.returnNameForCategory(id:categoryIds as! [String]))
+        let nieco = viewModel?.users[indexPath.row].category.map{$0.items}
+       
+        
+        var result = [[String]]()
+        for i in nieco!{
+            let nieco = i.map{$0.id}
+            let xxx = viewModel?.returnProductnames(ids: nieco)
+            result.append(xxx!)
+        }
+        
+        let sender = (viewModel?.users[indexPath.row],viewModel?.returnNameForCategory(id:categoryIds as! [String]), result)
         performSegue(withIdentifier: "id", sender: sender)
     }
     

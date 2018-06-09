@@ -22,8 +22,10 @@ class UsersViewModel {
     }
     
     func returnNameForCategory(id: [String]) -> [String]?{
-    
         return categories.filter{(id.contains($0.id!))}.map{$0.name!}
-        
+    }
+    
+    func returnProductnames(ids: [String]) -> [String]? {
+        return products.filter{(ids.contains($0.id!))}.map({$0.name!})
     }
 }

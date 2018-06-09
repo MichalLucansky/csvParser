@@ -13,29 +13,33 @@ class UserTableViewController: UITableViewController {
     
     var profile: UserProfile?
     var catNames: [String]?
+    var itemNames: [[String]]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         user.text = profile?.name
-        
+//        let nieco = itemNames![0]
+        print(itemNames![0])
     }
 
-    func configure(user: UserProfile, categoryNames: [String]?) {
+    func configure(user: UserProfile, categoryNames: [String]?, itemNames: [[String]] ) {
         self.profile = user
         self.catNames = categoryNames
+        self.itemNames = itemNames
     }
 
     // MARK: - Table view data source
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationVC = segue.destination as? CategoryDetailController {
-            
-            destinationVC.configure(items: (sender as? [UserItems])!)
+
+            destinationVC.configure(items: (sender as? [String])!)
         }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-         performSegue(withIdentifier: "items", sender: profile?.category[indexPath.row].items)
+//         performSegue(withIdentifier: "items", sender: profile?.category[indexPath.row].items)
+        performSegue(withIdentifier: "items", sender: itemNames?[indexPath.row])
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
